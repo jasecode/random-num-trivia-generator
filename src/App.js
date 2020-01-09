@@ -1,26 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import getData from './getData';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { Button, Card, CardContent, Typography } from '@material-ui/core'
+
+class App extends Component {
+  state = {
+    trivia: '',
+    year: '',
+  }
+
+  handleClick = () => {
+    getData().then((data) => {
+      let realData = JSON.parse(data)
+      this.setState({
+        trivia: realData.text,
+        year: realData.number
+      })
+      // JSON.parse() converts JSON to an object
+      // console.log(JSON.parse(data))
+      // console.log(realData.text)
+    })
+  }
+
+  render() {
+    return (
+      <div className="app">
+        <Typography variant="h2">Random Number Trivia Generator</Typography>
+        <Card className="card">
+          <CardContent>
+            <Typography variant="h5">{this.state.trivia}</Typography>
+            <Typography color="textSecondary">{this.state.year}</Typography>
+            <hr />
+            <Button className="margin-top" color="primary" variant="outlined" onClick={() => this.handleClick()}>Click for Quotes</Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 }
 
 export default App;
