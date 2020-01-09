@@ -1,4 +1,5 @@
 # Random Number Trivia Generator
+Created in React, quickly practice API calling + parsing JSON.
 
 ## How to Run:
 `npm i`
